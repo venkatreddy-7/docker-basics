@@ -1,0 +1,82 @@
+services:
+ 
+  app:
+
+    build:
+
+      context: .
+
+      dockerfile: Dockerfile
+ 
+    container_name: docker-basics-app
+ 
+    ports:
+
+      - "8090:8090"
+ 
+    environment:
+
+      SPRING_PROFILES_ACTIVE: docker
+
+      DB_HOST: postgres
+
+      DB_PORT: 5432
+
+      DB_NAME: dockerdb
+
+      DB_USERNAME: postgres
+
+      DB_PASSWORD: postgres
+ 
+    restart: unless-stopped
+ 
+    networks:
+
+      - basic_net
+ 
+ 
+  postgres:
+
+    image: postgres:16
+ 
+    container_name: docker-basics-postgres
+ 
+    ports:
+
+      - "5432:5432"
+ 
+    environment:
+
+      POSTGRES_DB: dockerdb
+
+      POSTGRES_USER: postgres
+
+      POSTGRES_PASSWORD: postgres
+ 
+    volumes:
+
+      - /opt/postgres_data:/var/lib/postgresql/data
+ 
+    healthcheck:
+
+      test: ["CMD-SHELL", "pg_isready -U postgres -d dockerdb"]
+
+      interval: 10s
+
+      timeout: 5s
+
+      retries: 5
+    restart: unless-stopped
+    networks:
+
+      - basic_net
+ 
+ 
+networks:
+
+  basic_net:
+
+    name: basic_net
+
+    driver: bridge
+ 

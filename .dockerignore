@@ -1,0 +1,10 @@
+.git
+.gitignore
+.idea
+.classpath
+.project
+.settings
+src/test
+README.md
+Dockerfile
+docker-compose.yml
