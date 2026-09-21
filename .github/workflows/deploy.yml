@@ -6,12 +6,10 @@ on:
       - main
 
 jobs:
-
   build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout code
         uses: actions/checkout@v6
 
@@ -34,7 +32,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.2.2
         with:
@@ -43,6 +40,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /opt/docker-basics
-            docker compose pull
-            docker compose up -d
-            docker compose ps
+            sudo docker compose pull
+            sudo docker compose up -d
+            sudo docker compose ps
